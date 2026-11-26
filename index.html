@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f4ef">
+  <meta name="description" content="어제와 이맘때의 날씨를 비교해 오늘의 온도를 쉽게 알려드려요.">
+  <title>오늘의 온도 — 숫자보다 가까운 날씨</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="header">
+      <a class="brand" href="./" aria-label="오늘의 온도 홈"><span class="brand-icon" aria-hidden="true">✳</span> 오늘의 온도<span class="brand-dot">.</span></a>
+      <span class="header-caption">YOUR DAILY WEATHER NOTE</span>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow"><span class="eyebrow-line"></span> 매일을 위한 작은 날씨 이야기</p>
+        <h1 id="page-title">오늘은, <em>어떤 하루일까요?</em></h1>
+        <p class="intro-copy">숫자만으로는 알기 어려운 오늘의 날씨.<br class="mobile-only"> 어제와 이맘때에 빗대어 알려드릴게요.</p>
+      </section>
+
+      <section class="location-section" aria-labelledby="location-title">
+        <div class="location-heading"><div><p class="section-kicker">YOUR LOCATION</p><h2 id="location-title">어디의 날씨가 궁금하세요?</h2></div><span class="location-hint">지역을 선택해 주세요 <span aria-hidden="true">↗</span></span></div>
+        <div class="location-controls">
+          <button class="location-button" id="locate-button" type="button"><span aria-hidden="true">⌖</span> 현재 위치 사용</button>
+          <form class="search-form" id="search-form" role="search"><label class="sr-only" for="city-input">도시 또는 지역 검색</label><span class="search-icon" aria-hidden="true">⌕</span><input id="city-input" name="city" type="search" placeholder="도시 또는 지역 검색" autocomplete="off" required><button type="submit">검색 <span aria-hidden="true">↗</span></button></form>
+        </div>
+        <div id="location-status" class="status" role="status" aria-live="polite"></div>
+        <ul id="search-results" class="search-results" aria-label="검색 결과" hidden></ul>
+      </section>
+
+      <section id="welcome" class="welcome" aria-label="시작 안내"><div class="welcome-art" aria-hidden="true"><span>✳</span><i>☁</i></div><div><p class="section-kicker">A LITTLE WEATHER NOTE</p><h2>당신의 하루를 위한<br>날씨 이야기가 기다려요.</h2><p>현재 위치를 사용하거나 궁금한 지역을 검색해 보세요.</p></div></section>
+
+      <section id="weather" class="weather" aria-label="선택한 지역의 날씨" hidden>
+        <div class="weather-topline"><div><p class="section-kicker">TODAY'S WEATHER</p><h2 id="place-name"></h2><p id="updated" class="updated"></p></div><button id="refresh" class="refresh" type="button" aria-label="날씨 새로고침">↻ <span>새로고침</span></button></div>
+        <div id="weather-status" class="status" role="status" aria-live="polite"></div>
+        <div id="weather-content" hidden>
+          <div class="dashboard">
+            <article class="today-card"><div class="today-card-top"><span>지금 이곳의 날씨</span><span id="weather-icon" class="weather-icon" aria-hidden="true">☀</span></div><div class="temperature-line"><strong id="current-temp">—</strong><span>°</span></div><div class="weather-condition" id="condition"></div><div class="today-card-bottom"><div><span>오늘의 최저</span><strong id="low-temp">—</strong></div><div><span>오늘의 최고</span><strong id="high-temp">—</strong></div><div><span>체감 온도</span><strong id="feels-temp">—</strong></div></div></article>
+            <article class="story-card"><div class="story-top"><span class="story-icon" aria-hidden="true">✳</span><span>오늘의 날씨 한마디</span><span class="story-number">01 / TODAY</span></div><h3 id="headline"></h3><p id="story"></p><div class="story-foot"><span>작은 차이가 만드는 오늘</span><span aria-hidden="true">↗</span></div></article>
+          </div>
+          <div class="details-heading"><div><p class="section-kicker">A CLOSER LOOK</p><h2>조금 더 자세히 볼까요?</h2></div><p>숫자에 이야기를 더했어요 <span aria-hidden="true">↘</span></p></div>
+          <div class="detail-grid">
+            <article class="detail-card"><div class="detail-label"><span>01</span><span>어제와 비교</span><span aria-hidden="true">↗</span></div><div class="detail-symbol" aria-hidden="true">↔</div><h3 id="yesterday-title">확인 중이에요</h3><p id="yesterday-copy"></p><span class="detail-tag">같은 시각 무렵 기준</span></article>
+            <article class="detail-card climate-card"><div class="detail-label"><span>02</span><span>이맘때와 비교</span><span aria-hidden="true">↗</span></div><div class="detail-symbol" aria-hidden="true">◌</div><h3 id="climate-title">확인 중이에요</h3><p id="climate-copy" aria-live="polite"></p><button id="climate-retry" class="text-button" type="button" hidden>다시 불러오기 ↻</button><span class="detail-tag">최근 30년 기준</span></article>
+            <article class="detail-card"><div class="detail-label"><span>03</span><span>바람과 체감</span><span aria-hidden="true">↗</span></div><div class="detail-symbol wind-symbol" aria-hidden="true">≋</div><h3 id="wind-title"></h3><p id="wind-copy"></p><span class="detail-tag" id="wind-tag"></span></article>
+          </div>
+          <p class="data-note">기온은 예보 및 재분석 자료로, 실제 관측값과 다를 수 있어요. 이맘때 평균은 최근 완료된 30년의 같은 날짜 전후 7일을 기준으로 계산한 값이며 공식 기후평년값은 아닙니다.</p>
+        </div>
+      </section>
+    </main>
+    <footer><div class="footer-brand">✳ <span>오늘의 온도</span></div><p>당신의 하루에 꼭 맞는 날씨 이야기.</p><div class="footer-sources">날씨 <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo ↗</a> · 지역 <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap ↗</a></div></footer>
+  </div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
